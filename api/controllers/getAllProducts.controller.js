@@ -1,6 +1,9 @@
 const db = require('../db.js');
 
-// This is a function that is getting all the products from the database.
+/**
+ * This is a function that is getting all the products from the database.
+ * @param res - the response object
+ */
 const getAllProducts = async (res) => {
 
 	try {
@@ -15,6 +18,5 @@ const getAllProducts = async (res) => {
 	}
 
 }
-
 
 module.exports = getAllProducts;
