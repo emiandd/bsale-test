@@ -1,7 +1,7 @@
 const request = require('supertest');
 const baseURL = 'http://localhost:3001';
 
-xdescribe('GET /products', () => {
+describe('GET /products', () => {
 
 	it('should return status code 200', async () => {
 		const response = await request(baseURL).get('/products');
@@ -15,7 +15,7 @@ xdescribe('GET /products', () => {
 
 })
 
-xdescribe('GET /categories', () => {
+describe('GET /categories', () => {
 
 	it('should return status code 200', async () => {
 		const response = await request(baseURL).get('/categories');
@@ -80,6 +80,37 @@ describe('GET /products/:category', () => {
 	it('should return "La categoría ingresada no existe" if category does not exists', async () => {
 		const response = await request(baseURL).get(`/products/20`);
 		expect(response.text).toBe('La categoría ingresada no existe');
+	})
+
+})
+
+
+describe('GET /products?search=name', () => {
+
+	it('should return status code 200', async () => {
+		const productName = 'monster';
+		const response = await request(baseURL).get(`/products?search=${productName}`);
+		expect(response.statusCode).toBe(200);
+	})
+
+	it('should return all products that match the name entered', async () => {
+		const productName = 'monster';
+		const response = await request(baseURL).get(`/products?search=${productName}`);
+		expect(response.body[0].name.toLowerCase()).toContain(productName);
+		expect(response.body[1].name.toLowerCase()).toContain(productName);
+		expect(response.body[2].name.toLowerCase()).toContain(productName);
+	})
+
+	it('should return status code 404 if the product not exists', async () => {
+		const productName = 'pepsi';
+		const response = await request(baseURL).get(`/products?search=${productName}`);
+		expect(response.statusCode).toBe(404);
+	})
+
+	it('should return "No se encontraron productos con ese nombre" if no products are found', async () => {
+		const productName = 'pepsi';
+		const response = await request(baseURL).get(`/products?search=${productName}`);
+		expect(response.text).toBe("No se encontraron productos con ese nombre");
 	})
 
 })
