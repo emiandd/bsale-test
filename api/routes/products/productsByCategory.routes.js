@@ -9,7 +9,7 @@ router.get('/products/:category', async (req, res) => {
 	try {
 		return await getProductsByCategory(res, category);
 	} catch(e) {
-		console.log({error:e});
+		return res.status(404).json({error:e})
 	}
 
 })

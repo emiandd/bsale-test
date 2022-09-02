@@ -29,7 +29,7 @@ xdescribe('GET /categories', () => {
 
 })
 
-xdescribe('GET /products/:category', () => {
+describe('GET /products/:category', () => {
 
 	it('should return status code 200', async () => {
 		const response = await request(baseURL).get(`/products/1`);
@@ -71,4 +71,15 @@ xdescribe('GET /products/:category', () => {
 		const response = await request(baseURL).get(`/products/7`);
 		expect(response.body[0].category).toBe(7)
 	})
+
+	it('should return status code 404 if the category not exists', async () => {
+		const response = await request(baseURL).get(`/products/20`);
+		expect(response.statusCode).toBe(404);
+	})
+
+	it('should return "La categoría ingresada no existe" if category does not exists', async () => {
+		const response = await request(baseURL).get(`/products/20`);
+		expect(response.text).toBe('La categoría ingresada no existe');
+	})
+
 })
