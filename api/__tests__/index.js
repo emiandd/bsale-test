@@ -110,7 +110,8 @@ describe('GET /products?search=name', () => {
 	it('should return "No se encontraron productos con ese nombre" if no products are found', async () => {
 		const productName = 'pepsi';
 		const response = await request(baseURL).get(`/products?search=${productName}`);
-		expect(response.text).toBe("No se encontraron productos con ese nombre");
+		console.log(response);
+		expect(response.body.error).toBe("No se encontraron productos con ese nombre");
 	})
 
 })

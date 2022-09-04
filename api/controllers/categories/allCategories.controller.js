@@ -10,8 +10,9 @@ const getAllCategories = async (res) => {
 		const q = 'SELECT * FROM category';
 		await db.query( q, (err, result, fields) => {
 			if(err) throw err;
-			return res.send(result);
+			res.send(result);
 		})
+		// db.end();
 	} catch(e) {
 		console.log({error:e});
 	}
